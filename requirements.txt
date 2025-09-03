@@ -6,3 +6,4 @@ pandas
 scikit-learn
 langchain-google-genai
 langchain-openai
+grandalf

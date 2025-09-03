@@ -29,9 +29,11 @@ def get_llm():
         return llm
 
 
-def get_ollama():
-    return OllamaLLM(model="llama3.2")
+def get_ollama(temperature=0):
+    return OllamaLLM(model="llama3.2", temperature=temperature)
 
 
 def get_google_genai():
+    load_dotenv()
+    print(f"model = {os.getenv("GOOGLE_GENAI_LLM_MODEL")}")
     return ChatGoogleGenerativeAI(model=os.getenv("GOOGLE_GENAI_LLM_MODEL"))
