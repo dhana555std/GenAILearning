@@ -1,5 +1,5 @@
 # GenAITraining
-Gen AI Training for fresh beginners in Gen AI
+Gen AI Training for fresh beginners.
 
 ### Installations
 1. Ollama(install two models for example tinyllama and llama3.2)
