@@ -2,11 +2,11 @@
 Gen AI Training for fresh beginners in Gen AI
 
 ### Installations
-1. Python latest version
-2. PyCharm
-3. Git
-4. GitHub Copilot plugin in PyCharm
-5. Ollama(install two models for example tinyllama and llama3.2)
+1. Ollama(install two models for example tinyllama and llama3.2)
+2. Python latest version
+3. PyCharm
+4. Git
+5. GitHub Copilot plugin in PyCharm
 
 ### Registrations
 1. GitHub Account
