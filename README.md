@@ -1,8 +1,6 @@
 # GenAITraining
 Gen AI Training for fresh beginners in Gen AI
 
-## Basics
-
 ### Installations
 1. Python latest version
 2. PyCharm
