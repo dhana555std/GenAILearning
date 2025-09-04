@@ -1,9 +1,11 @@
 ollama
 langchain-core
 langchain-ollama
+langchain-community
 python-dotenv
 pandas
 scikit-learn
 langchain-google-genai
 langchain-openai
 grandalf
+pypdf
