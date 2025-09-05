@@ -6,8 +6,9 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
-from langchain_pinecone.vectorstores import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
+from langchain_pinecone import PineconeVectorStore
+
 
 from utils.llm_utils import get_ollama
 

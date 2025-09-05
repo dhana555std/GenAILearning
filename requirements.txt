@@ -13,4 +13,5 @@ langchain-openai
 grandalf
 einops
 pypdf
+docx2txt
 sentence-transformers
