@@ -2,10 +2,15 @@ ollama
 langchain-core
 langchain-ollama
 langchain-community
+langchain-chroma
+langchain-huggingface
+langchain-pinecone
 python-dotenv
 pandas
 scikit-learn
 langchain-google-genai
 langchain-openai
 grandalf
+einops
 pypdf
+sentence-transformers
