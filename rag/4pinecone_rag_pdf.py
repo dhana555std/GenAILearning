@@ -2,19 +2,20 @@ import os
 from datetime import datetime, timezone
 
 from dotenv import load_dotenv
-from langchain.prompts import PromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import (
     PyPDFLoader,
     UnstructuredPDFLoader,
     Docx2txtLoader,
 )
+from langchain_core.messages import SystemMessage
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
-from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone, ServerlessSpec
 
-from utils.llm_utils import get_google_genai, get_ollama
+from utils.llm_utils import get_google_genai
 
 # Load environment variables
 load_dotenv()
@@ -52,28 +53,28 @@ def create_pinecone_db():
         raise FileNotFoundError(f"The folder {books_dir} does not exist.")
 
     # Pick only pdf/doc/docx files
-    book_files = [f for f in os.listdir(books_dir) if f.lower().endswith((".pdf", ".docx", ".doc"))]
+    profiles = [f for f in os.listdir(books_dir) if f.lower().endswith((".pdf", ".docx", ".doc"))]
 
     documents = []
-    for book_file in book_files:
-        file_path = os.path.join(books_dir, book_file)
+    for profile_file in profiles:
+        file_path = os.path.join(books_dir, profile_file)
 
         # Load based on type
-        if book_file.lower().endswith(".pdf"):
+        if profile_file.lower().endswith(".pdf"):
             try:
                 loader = PyPDFLoader(file_path)
                 book_docs = loader.load()
-                print(f"📄 Loaded {len(book_docs)} pages from {book_file} using PyPDFLoader")
+                print(f"📄 Loaded {len(book_docs)} pages from {profile_file} using PyPDFLoader")
                 if not book_docs:
                     loader = UnstructuredPDFLoader(file_path)
                     book_docs = loader.load()
             except Exception as e:
-                print(f"❌ Error loading {book_file}: {e}")
+                print(f"❌ Error loading {profile_file}: {e}")
                 continue
-        elif book_file.lower().endswith((".doc", ".docx")):
+        elif profile_file.lower().endswith((".doc", ".docx")):
             loader = Docx2txtLoader(file_path)
             book_docs = loader.load()
-            print(f"📄 Loaded {len(book_docs)} sections from {book_file}")
+            print(f"📄 Loaded {len(book_docs)} sections from {profile_file}")
         else:
             continue
 
@@ -81,7 +82,7 @@ def create_pinecone_db():
         for i, doc in enumerate(book_docs):
             doc.metadata = {
                 "location": "Bangaluru",
-                "filename": book_file,
+                "filename": profile_file,
                 "timestamp": get_timestamp()
             }
             documents.append(doc)
@@ -148,8 +149,8 @@ def get_query_response(query: str, criteria: dict = None):
     db = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
 
     retriever = db.as_retriever(
-        search_type="similarity_score_threshold",
-        search_kwargs={"k": 10, "score_threshold": 0.1},
+        search_type="similarity",   # changed from similarity_score_threshold
+        search_kwargs={"k": 15},    # fetch more candidates
     )
 
     relevant_docs = retriever.invoke(query)
@@ -165,16 +166,19 @@ def get_query_response(query: str, criteria: dict = None):
 
     context = "\n".join([doc.page_content for doc in relevant_docs])
 
-    template = """Answer the following question in ONE sentence only. If the context is not available say I don't know.
+    # 🔹 Add System Message + User Message
+    prompt = ChatPromptTemplate.from_messages([
+        SystemMessage(content="You are an Assistant who helps in performing search results on top of Resumes."),
+        ("human", """Answer the following question. 
+If the context is not available, say 'I don't know'. 
+Context:
+{context}
 
-    Context:
-    {context}
+Question: {question}
 
-    Question: {question}
+Answer:""")
+    ])
 
-    Answer:"""
-
-    prompt = PromptTemplate.from_template(template)
     chain = prompt | llm | StrOutputParser()
     answer = chain.invoke({"context": context, "question": query})
 
@@ -184,10 +188,13 @@ def get_query_response(query: str, criteria: dict = None):
 
 
 if __name__ == "__main__":
-    create_pinecone_db()
+    # create_pinecone_db()
 
     filters = {
-        # "filename": {"contains": "Belge"},
         "location": {"equals": "Bangaluru"}
     }
-    get_query_response("Who worked on Vue?", criteria=filters)
+    # get_query_response("Get all peoples filenames who know Vue")
+    # get_query_response("Get me Poojitha's email.")
+    get_query_response("Who are the people who worked on Quantitative User metrics?")
+
+

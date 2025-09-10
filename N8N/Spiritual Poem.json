@@ -1,0 +1,167 @@
+{
+  "name": "Spiritual Poem",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1jr4vL_-fqb8smu1Nf_xaLNSoynaN4nE_7SV3VVivbP4",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jr4vL_-fqb8smu1Nf_xaLNSoynaN4nE_7SV3VVivbP4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -160,
+        -16
+      ],
+      "id": "a37bd5c2-ffa4-4fe0-b543-3a7a1b15702e",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OvETMsunUL0QZDnO",
+          "name": "Google Sheet OAuth"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a poem for the person with name{{ $json.Name }} and who belongs to {{ $json.Religion }}. Display only Poem. Don't write anything else. No Pre or Post text.\n\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert in writing spiritual poem. Write a poem based on the person's name and their religion."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        -16
+      ],
+      "id": "04d7f9f8-32da-4be1-b222-0f2ad96848a3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        16,
+        208
+      ],
+      "id": "9b4a638b-1504-4560-8a25-74716f57b989",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "dzaXcJ5wHBHLTMsj",
+          "name": "OllamaLLM"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -16
+      ],
+      "id": "348cd568-e00d-4203-9479-2d81366a0af3",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "Message from the Heavens",
+        "message": "=Dear {{ $('Get row(s) in sheet').item.json.Name }},\n           {{ $json.output }} \n\n\nMay God bless you.\n",
+        "options": {
+          "sendTo": "dhanasbackup@gmail.com"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        400,
+        -16
+      ],
+      "id": "42622f66-2ccd-419a-98ba-e04494ae3ed3",
+      "name": "Create a draft",
+      "webhookId": "ffeeb994-4a27-43cd-8cd9-c33ab5ce8da8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Ofe5g2Tdz7bYf1h7",
+          "name": "Gmail"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3d4bf723-4599-46c5-86b8-e6000ef6758c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7914351fd192fcc516f9c8d5b96160540d7c6ef9febc8fe99d0d24329f13e7fa"
+  },
+  "id": "oMO8BjSvHIqNfSnw",
+  "tags": []
+}

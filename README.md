@@ -1,6 +1,17 @@
 # GenAITraining
 Gen AI Training for fresh beginners.
 
+# Links
+
+## Ollama
+* [Server url](http://localhost:11434/)
+* [Ollama Models](https://ollama.com/library)
+* [REST Endpoints](https://www.postman.com/postman-student-programs/ollama-api/request/bcv7hau/list-local-models)
+
+## N8N
+[N8](https://docs.n8n.io/hosting/installation/npm/#next-steps)
+[Google Cloud Console](https://console.cloud.google.com/welcome)
+
 ### Installations
 1. Ollama(install two models for example tinyllama and llama3.2)
 2. Python latest version
