@@ -1,32 +1,46 @@
-# GenAITraining
-Gen AI Training for fresh beginners.
+# GenAI Learning
+Gen AI Learning from the beginning.
 
-# Links
-
-## Ollama
-* [Server url](http://localhost:11434/)
-* [Ollama Models](https://ollama.com/library)
-* [REST Endpoints](https://www.postman.com/postman-student-programs/ollama-api/request/bcv7hau/list-local-models)
-
-## N8N
-[N8](https://docs.n8n.io/hosting/installation/npm/#next-steps)
-[Google Cloud Console](https://console.cloud.google.com/welcome)
+## 1. Prompt Engineering
 
 ### Installations
-1. Ollama(install two models for example tinyllama and llama3.2)
-2. Python latest version
-3. PyCharm
-4. Git
-5. GitHub Copilot plugin in PyCharm
+* Install Ollama 
+* Evaluate server is up or running using [Server url](http://localhost:11434/)
+* Search [Ollama Models](https://ollama.com/library) and Download tinyllma and llama3.2 3b
+* Explore [REST Endpoints](https://www.postman.com/postman-student-programs/ollama-api/request/bcv7hau/list-local-models)
+* Install Python (3.12+)
+* Install git
+* Install Pycharm
 
-### Registrations
-1. GitHub Account
-2. Gmail
-3. ChatGPT
-4. Google Gen AI key creation
+### Python Setup
+* git clone https://github.com/dhana555std/GenAILearning.git
+* Create a Virtual Environment
+* Install all dependencies inside `requirements.txt`.
+* Run a sample program for ollama
 
-# Assignments
-1. List the various Ollama commands.
-2. How to install OLLAMA Server without using UI.
-3. Write all the Prompts for a particular use case that is other than the Banking/Financial/Insurance domain.
+## 2. Langchain Basics
 
+### Installations/Account Creations
+* Set up Google Account if you don't have. Login to Google.
+* Create [API Key](https://aistudio.google.com/app/apikey)
+* Set up Github Account.
+* Add Github Copilot plugin.
+
+### Python code set up
+* Set up Environment variables in .env file.
+
+
+## 3. RAG
+### Installations/Account Creations
+* Pinecone Database
+* [Diagram](./RAG.png)
+
+
+## 4. Agents
+* [Diagram](6agents/react.png)
+
+
+## N8N
+* [Nodejs install](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+* [N8N installation](https://docs.n8n.io/hosting/installation/npm/#next-steps)
+* [Google Cloud Console set up](https://console.cloud.google.com/welcome)

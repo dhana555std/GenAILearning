@@ -8,14 +8,14 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from utils.llm_utils import get_llm
+from utils.llm_utils import get_google_genai
 
-llm = get_llm()
+llm = get_google_genai()
 
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(curr_dir)
 
-books_dir = os.path.join(parent_dir, "books")
+books_dir = os.path.join(parent_dir, "books1")
 persistent_directory = os.path.join(parent_dir, "db", "chroma_db_with_metadata")
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 

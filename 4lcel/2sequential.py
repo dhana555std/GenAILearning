@@ -20,7 +20,7 @@ def main():
     chain = (prompt_template_capital | ollama | StrOutputParser() |
              RunnableLambda(lambda capital: {"capital": capital, "count": 4})
              | prompt_template_visits | gemini | StrOutputParser())
-    res = chain.invoke({"country": "Austria", "lines": 10})
+    res = chain.invoke({"country": "Austria"})
     chain.get_graph().print_ascii()
 
     print(res)

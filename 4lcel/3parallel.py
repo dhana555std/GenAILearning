@@ -10,7 +10,7 @@ def main():
     parser = StrOutputParser()
 
     notes_template = "Write a 10 pointer notes on the topic {topic}"
-    quiz_template = "Create 5 MCQ on the {topic}"
+    quiz_template = "Create 5 MCQ on the {topic}. Also provide the answers in the end."
     merge_template = "Merge both {notes} and {quiz}"
 
     prompt_template_notes = PromptTemplate.from_template(template=notes_template)

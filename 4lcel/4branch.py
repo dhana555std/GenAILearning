@@ -15,8 +15,11 @@ def main():
     prompt_feedback = PromptTemplate.from_template(template=feedback_template)
     feedback_chain = prompt_feedback | llm | parser
 
-    prompt_positive = PromptTemplate.from_template("Write a one liner positive response on {feedback}.")
-    prompt_negative = PromptTemplate.from_template("Write a one liner negative response on {feedback}.")
+    prompt_positive = PromptTemplate.from_template("Provide a single liner thanking the person for feedback "
+                                                   "\n {feedback}. Don't give multiple options. Only one sentence.")
+    prompt_negative = (PromptTemplate
+                       .from_template("Provide single liner apologizing the person for negative feedback receieved."
+                                                   "\n {feedback}. Don't give multiple options. Only one sentence."))
 
     positive_chain = prompt_positive | llm | parser
     negative_chain = prompt_negative | llm | parser
@@ -28,7 +31,7 @@ def main():
     )
 
     chain = feedback_chain | result_chain
-    res = chain.invoke({"feedback": "Food is worst!"})
+    res = chain.invoke({"feedback": "Food is awful"})
     print(res)
 
 

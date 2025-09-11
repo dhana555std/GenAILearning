@@ -8,10 +8,10 @@ def main():
     prompt_template_text = "Tell {count} jokes on {topic}"
     prompt_template = PromptTemplate.from_template(template=prompt_template_text)
 
-    llm = get_ollama(temperature=2.0)
+    llm = get_ollama()
 
     chain = prompt_template | llm | StrOutputParser()
-    res = chain.invoke({"count": 2, "topic": "Judges"})
+    res = chain.invoke({"count": 2, "topic": "judges"})
     print(res)
 
 
