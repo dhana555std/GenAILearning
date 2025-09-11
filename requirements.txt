@@ -16,3 +16,4 @@ pypdf
 docx2txt
 sentence-transformers
 wikipedia
+firecrawl-py
