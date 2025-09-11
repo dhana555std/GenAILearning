@@ -40,7 +40,13 @@ Gen AI Learning from the beginning.
 * [Diagram](6agents/react.png)
 
 
-## N8N
+## 5 N8N
 * [Nodejs install](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [N8N installation](https://docs.n8n.io/hosting/installation/npm/#next-steps)
 * [Google Cloud Console set up](https://console.cloud.google.com/welcome)
+
+
+## 6 Scraping
+* [Firecrawl](https://www.firecrawl.dev/)
+
+
